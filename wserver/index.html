@@ -1,0 +1,183 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Torrent File Selector</title>
+    <link rel="icon" href="https://telegra.ph/file/c8c15d446a4a5a3843acd.png" type="image/jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <script src="//cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <style>
+        /* style1 */
+        /* style2 */
+    </style>
+</head>
+
+<body>
+    <!--© Designed and coded by @bipuldey19-Telegram-->
+    <header>
+        <div class="brand">
+            <img src="https://telegra.ph/file/c8c15d446a4a5a3843acd.png" alt="logo" />
+        </div>
+        <h2 class="name">Qbittorrent Selection</h2>
+        <div class="social">
+            <a href="https://www.github.com/junedkh"><i class="fab fa-github"></i></a>
+            <a href="https://t.me/JMDKH_Team"><i class="fab fa-telegram"></i></a>
+        </div>
+    </header>
+    <!-- pin_entry -->
+    <!-- files_list -->
+    <!-- Print -->
+    <script>
+        $(document).ready(function () {
+            var tags = $("li").filter(function () {
+                return $(this).find("ul").length !== 0;
+            });
+            tags.each(function () {
+                $(this).addClass("parent");
+            });
+            $("body").find("ul:first-child").attr("id", "treeview");
+            $(".parent").prepend("<span>▶</span>");
+            $("span").click(function (e) {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                $(this).parent(".parent").find(">ul").toggle("slow");
+                if ($(this).hasClass("active")) $(this).removeClass("active");
+                else $(this).addClass("active");
+            });
+        });
+        if (document.getElementsByTagName("ul").length >= 10) {
+            var labels = document.querySelectorAll("label");
+            //Shorting the file/folder names
+            labels.forEach(function (label) {
+                if (label.innerText.toString().split(" ").length >= 6) {
+                    let FirstPart = label.innerText
+                        .toString()
+                        .split(" ")
+                        .slice(0, 3)
+                        .join(" ");
+                    let SecondPart = label.innerText
+                        .toString()
+                        .split(" ")
+                        .splice(-3)
+                        .join(" ");
+                    label.innerText = `${FirstPart}... ${SecondPart}`;
+                }
+                if (label.innerText.toString().split(".").length >= 6) {
+                    let first = label.innerText
+                        .toString()
+                        .split(".")
+                        .slice(0, 3)
+                        .join(" ");
+                    let second = label.innerText
+                        .toString()
+                        .split(".")
+                        .splice(-3)
+                        .join(".");
+                    label.innerText = `${first}... ${second}`;
+                }
+            });
+        }
+    </script>
+    <script>
+        var set_selections = function (url) {
+            $.ajax({
+                url: url,
+                type: 'POST',
+                contentType: 'application/x-www-form-urlencoded',
+                data: $("#SelectedFilesForm").serialize(),
+                success: function (data, textStatus, jQxhr) {
+                    Swal.fire({
+                        title: "Selection Updated!",
+                        text: "Now you can start download!",
+                        icon: "success",
+                        confirmButtonText: "Okay",
+                        heightAuto: true,
+                        allowOutsideClick: false
+                    });
+                    
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    Swal.fire({
+                        title: "Something went wrong!",
+                        text: "Check Console log!",
+                        icon: "error",
+                        confirmButtonText: "Okay",
+                        heightAuto: true,
+                        allowOutsideClick: false
+                    });
+                    console.log(errorThrown);
+                }
+            });
+        }
+        $(document).ready(function () {
+            $("#SelectedFilesForm").on("submit", function (e) {
+                e.preventDefault();
+                var url = $("#URL").val();
+                set_selections(url);
+            });
+        });
+    </script>
+    <script>
+        $('input[type="checkbox"]').change(function (e) {
+            var checked = $(this).prop("checked"),
+                container = $(this).parent(),
+                siblings = container.siblings();
+            /*
+            $(this).attr('value', function(index, attr){
+               return attr == 'yes' ? 'noo' : 'yes';
+            });
+            */
+            container.find('input[type="checkbox"]').prop({
+                indeterminate: false,
+                checked: checked
+            });
+
+            function checkSiblings(el) {
+                var parent = el.parent().parent(),
+                    all = true;
+                el.siblings().each(function () {
+                    let returnValue = all = ($(this).children('input[type="checkbox"]').prop(
+                        "checked") === checked);
+                    return returnValue;
+                });
+
+                if (all && checked) {
+                    parent.children('input[type="checkbox"]').prop({
+                        indeterminate: false,
+                        checked: checked
+                    });
+                    checkSiblings(parent);
+                } else if (all && !checked) {
+                    parent.children('input[type="checkbox"]').prop("checked", checked);
+                    parent.children('input[type="checkbox"]').prop("indeterminate", (parent.find(
+                        'input[type="checkbox"]:checked').length > 0));
+                    checkSiblings(parent);
+                } else {
+                    el.parents("li").children('input[type="checkbox"]').prop({
+                        indeterminate: true,
+                        checked: false
+                    });
+                }
+            }
+            checkSiblings(container);
+        });
+    </script>
+</body>
+
+<footer style="height: 30%;">
+    <iframe data-aa="1856195" src="//acceptable.a-ads.com/1856195?size=Adaptive&background_color=0d1117&title_color=ffffff&link_color=ffffff"
+    style="border:0px; padding:0; width:100%; height:100%; overflow:hidden; background-color: transparent;">
+</iframe>
+</footer>
+
+</html>
