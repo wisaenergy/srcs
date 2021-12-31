@@ -101,7 +101,7 @@
                         text: "Now you can start download!",
                         icon: "success",
                         confirmButtonText: "Okay",
-                        preConfirm: location.reload(),
+                        preConfirm: () => location.reload(),
                         heightAuto: true,
                         allowOutsideClick: false
                     });
