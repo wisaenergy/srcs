@@ -148,3 +148,21 @@ input[type="submit"]:hover, input[type="submit"]:focus {
 #treeview .parent>ul {
   display: none;
 }
+
+#sticks {
+  margin: 0vh 1vw;
+  margin-bottom: 1vh;
+  padding: 1vh 3vw;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid rgba(255, 255, 255, 0.11);
+  border-radius: 20px;
+  background-color: #161b22;
+  align-items: center;
+}
+
+#sticks.stick {
+  position: sticky;
+  top: 0;
+  z-index: 10000;
+}

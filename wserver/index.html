@@ -259,6 +259,19 @@
             } while (size > 1024);
             return Math.max(size, 0).toFixed(1) + byteUnits[i];
         }
+        function sticking() {
+            var window_top = $(window).scrollTop();
+            var div_top = $('.brand').offset().top;
+            if (window_top > div_top) {
+                $('#sticks').addClass('stick');
+            } else {
+                $('#sticks').removeClass('stick');
+            }
+        }
+        $(function () {
+            $(window).scroll(sticking);
+            sticking();
+        });
     </script>
 </body>
 
