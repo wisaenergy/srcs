@@ -24,8 +24,9 @@ function secAds() {
 }
 
 function thirdAd() {
-    if (document.body) {
-      document.body.innerHTML +=
-        "<iframe data-aa='2031954' src='//acceptable.a-ads.com/2031954' style='border:0px; padding:0; width:100%; height:100%; overflow:hidden; background-color: transparent;'></iframe>";
+    try {
+        document.body.innerHTML += `<iframe data-aa="2031954" src="//acceptable.a-ads.com/2031954?size=Adaptive&background_color=000000" style="border:0px; padding:0; width:100%; height:100%; overflow:hidden; background-color: transparent;"></iframe>`;
+    } catch (e) {
+        console.log("thirdAd : " + e);
     }
-  }
+}
