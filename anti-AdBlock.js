@@ -17,7 +17,7 @@ async function checkAdblock() {
             allowOutsideClick: false,
         });
     } else {
-        console.log("Ad blocker is not used.");
+        loadAds();
     }
 }
 
