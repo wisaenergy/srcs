@@ -4,12 +4,7 @@ async function checkAdblock() {
     if (!isBlocked) {
         isBlocked = await this.hasAdblockByScript();
     }
-
-    if (isBlocked) {
-        return true
-    } else {
-        return false
-    }
+    return isBlocked
 }
 
 async function hasAdblockByScript() {
