@@ -6,18 +6,9 @@ async function checkAdblock() {
     }
 
     if (isBlocked) {
-        Swal.fire({
-            title: "AdBlocker Detected!",
-            text: "Please Disable it and press reload",
-            icon: "error",
-            confirmButtonText: "Reload",
-            preConfirm: () => {
-                checkagain(isBlocked);
-            },
-            allowOutsideClick: false,
-        });
+        return true
     } else {
-        console.log('Adblocker not detected')
+        return false
     }
 }
 
@@ -75,11 +66,4 @@ function appendIframeAds() {
     iframe.id = "ads-text-iframe";
     iframe.src = "https://domain.com/ads.html";
     document.body.appendChild(iframe);
-}
-function checkagain(isBlocked) {
-    if (isBlocked == true) {
-        location.reload();
-    } else {
-        console.log("No Adblocker here");
-    }
 }
